@@ -1,0 +1,470 @@
+\documentclass{article}[12pt]
+\usepackage[utf8]{inputenc} 
+\usepackage{amsthm}
+\usepackage{hhline}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage[
+top    = 1.00cm,
+bottom = 2.50cm,
+left   = 3.00cm,
+right  = 2.50cm]{geometry}
+
+\newenvironment{solution}
+  {\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]}
+  {\end{proof}}
+  
+\newtheorem{innercustomprblm}{Problem}
+\newenvironment{problem}[1]
+  {\renewcommand\theinnercustomprblm{#1}\innercustomprblm}
+  {\endinnercustomprblm}
+
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator{\Po}{Po}
+\DeclareMathOperator{\Norm}{N}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Exp}{Exp}
+
+\renewcommand{\P}{\mathbb{P}}
+
+\newcommand{\E}{\mathbb{E}}
+
+\title{Probability Theory \\ Homework Assignment 2}
+\author{Bulat Khamitov, MSSA2019}
+\date{September 30, 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Random Variables}
+
+\begin{problem}{4.25}\normalfont
+Two coins are to be flipped. 
+The first coin will land on heads with probability $0.6$, the second with probability $0.7$. 
+Assume that the results of the flips are independent, and let $X$ equal the total number of heads that result.
+\begin{enumerate}[label=(\alph*)]
+    \item Find $\mathbb{P}(X = 1)$.
+    \item Determine $\E[X]$.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+We denote the following:
+\begin{itemize}
+    \item $H$ -- coin landed on heads;
+    \item $T$ -- coin landed on tails.
+\end{itemize}
+\begin{enumerate}[label=(\alph*)]
+    \item We have
+    \begin{equation*}
+        \P(\text{coin landed on heads once}) = \P(\text{1st -- H, 2nd -- T $\cup$ 1st -- T, 2nd -- H})
+    \end{equation*}
+    These events are disjoint:
+    \begin{equation*}
+        \P(\text{coin landed on heads once}) = \P(\text{1st -- H, 2nd -- T}) + \P(\text{1st -- T, 2nd -- H}).
+    \end{equation*}
+    Coin flips are independent:
+    \begin{align*}
+        \P(\text{1st -- H, 2nd -- T}) &+ \P(\text{1st -- T, 2nd -- H}) = 
+        \\
+        &= \P(\text{1st -- H})\P(\text{2nd -- T}) + \P(\text{1st -- T})\P(\text{2nd -- H}).
+    \end{align*}
+    Probabilities are
+    \begin{gather*}
+        \P(\text{2nd -- T}) = 1 - \P(\text{2nd -- H}) = 1 - 0.7 = 0.3.
+        \\
+        \P(\text{1st -- T}) = 1 - \P(\text{1st -- H}) = 1 - 0.6 = 0.4.
+    \end{gather*}
+    Hence,
+    \begin{equation*}
+        \P(X = 1) = \P(\text{coin landed on heads once}) = 0.6\cdot 0.3 + 0.4 \cdot 0.7 = 0.46.
+    \end{equation*}
+    
+    \item Since $X$ is the number of heads in result, we have to find
+    \begin{equation*}
+        \P(X = 0),\quad\P(X = 1),\quad\P(X = 2)
+    \end{equation*}
+    in order to determine $\E[X]$.
+    \begin{enumerate}[label=(b.\arabic*)]
+        \item $\P(X = 0)$:
+        \begin{align*}
+            \P(X = 0) &= \P(\text{1st -- T}\cap\text{2nd -- T})
+            \\
+            &=\P(\text{1st -- T})\P(\text{2nd -- T})
+            \\
+            &=0.4\cdot 0.3 = 0.12.
+        \end{align*}
+        \item $\P(X = 1)$ is computed in part (a).
+        \item $\P(X = 2)$:
+        \begin{align*}
+            \P(X = 2) &= \P(\text{1st -- H}\cap\text{2nd -- H})
+            \\
+            &=\P(\text{1st -- H})\P(\text{2nd -- H})
+            \\
+            &=0.6\cdot 0.7 = 0.42.
+        \end{align*}
+    \end{enumerate}
+    Hence,
+    \begin{equation*}
+        \E[X] = \sum_{i=0}^{2}i\cdot p_{i} = \sum_{i=0}^{2}i\cdot\P(X=i) = 0\cdot 12 + 1\cdot 0.46 + 2\cdot 0.42 = 1.3.
+    \end{equation*}
+\end{enumerate}
+\end{solution}
+
+\begin{problem}{4.27}\normalfont
+An insurance company writes a policy to the effect that an amount of money $A$ must be paid if some event $E$ occurs within a year. 
+If the company estimates that $E$ will occur within a year with probability $p$, what should it charge the customer in order that its expected profit will be $10$ percent of $A$?
+\end{problem}
+\begin{solution}
+We denote the following:
+\begin{itemize}
+    \item $C$ -- number of money the company charges;
+    \item $X$ -- profit.
+\end{itemize}
+According to the problem's conditions, there are 2 outcomes:
+\begin{equation*}
+    \begin{cases}
+        C - A,& \text{if $E$ occurs},
+        \\
+        C,& \text{if $E$ doesn't occur}.
+    \end{cases}
+\end{equation*}
+Since $p$ is the probability of $E$ occurring, then the opposite would be $1 - p$.
+Expected profit $X$ can be found as expected value:
+\begin{equation*}
+    \E[X] = p(C - A) + (1 - p)C = -pA + C.
+\end{equation*}
+We can find $C$ by solving the equation
+\begin{gather*}
+    \dfrac{1}{10}\cdot A = C - pA
+    \\
+    C = A\left(p + \dfrac{1}{10}\right).
+\end{gather*}
+\end{solution}
+
+\begin{problem}{4.38}\normalfont
+If $\E[X] = 1$ and $\Var(X) = 5$, find
+\begin{enumerate}[label=(\alph*)]
+    \item $\E[(2 + X)^{2}]$
+    \item $\Var(4 + 3X)$
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\quad
+\begin{enumerate}[label=(\alph*)]
+    \item By the squared sum formula we have
+    \begin{equation*}
+        \E\left[(2 + X)^{2}\right] = \E\left[4 + 4X + X^{2}\right].
+    \end{equation*}
+    Using the properties of expected value, we get
+    \begin{equation*}
+        \E\left[4 + 4X + X^{2}\right] = \E[4] + \E[4X] + \E\left[X^{2}\right].
+    \end{equation*}
+    We know that
+    \begin{equation*}
+        \Var(X) = \E\left[X^{2}\right] - \E\left[X\right]^{2}.
+    \end{equation*}
+    Hence,
+    \begin{equation*}
+        \E[4] + 4\cdot\E[X] + \Var(X) + \E[X]^{2} = 4 + 4\cdot 1 + 5 + 1\cdot 1 = 14.
+    \end{equation*}
+    
+    \item By the properties of variance we have
+    \begin{equation*}
+        \Var(4 + 3X) = \Var(3X) = 3^{2}\cdot\Var(X) = 9\cdot 5 = 45.
+    \end{equation*}
+\end{enumerate}
+\end{solution}
+
+\begin{problem}{4.50(a)}\normalfont
+Suppose that a biased coin that lands on heads with probability $p$ is flipped $10$ times. 
+Given that a total of $6$ heads results, find the conditional probability that the first $3$ outcomes are
+\begin{enumerate}[label=(\alph*)]
+    \item $h$, $t$, $t$ (meaning that the first flip results in heads, the second in tails, and the third in tails).
+\end{enumerate}
+\end{problem}
+\begin{solution}
+We donete the following:
+\begin{itemize}
+    \item $HTT$ -- first 3 flips;
+    \item $6H$ -- 6 heads out of 10.
+\end{itemize}
+Taking that into account, we need to find
+\begin{equation*}
+    \P(HTT\mid 6H).
+\end{equation*}
+By Bayesian theorem we have
+\begin{equation*}
+    \P(HTT\mid 6H) = \dfrac{\P(6H\mid HTT)\P(HTT)}{\P(6H)}.
+\end{equation*}
+Since the outcome is $6$ heads out of $10$ flips, we use Binomial distribution:
+\begin{equation*}
+    \P(6H) = \binom{10}{6}p^{6}(1 - p)^{4}.
+\end{equation*}
+Let's take a closer look at the event $HTT$: the probability of heads in result is $p$, so the opposite is $1 - p$.
+Hence, we have
+\begin{equation*}
+    \P(HTT) = p(1 - p)^{2}.
+\end{equation*}
+As for $\P(6H\mid HTT)$, the first flip resulted in heads, meaning that another $5$ flips resulted in heads are in the next $7$ outcomes.
+\begin{equation*}
+    \P(6H\mid HTT) = \binom{7}{5}p^{5}(1 - p)^{2}.
+\end{equation*}
+Hence,
+\begin{align*}
+    \P(HTT\mid 6H) &= \dfrac{\P(6H\mid HTT)\P(HTT)}{\P(6H)}
+    \\
+    &=\dfrac{\binom{7}{5}p^{5}(1 - p)^{2}p(1 - p)^{2}}{\binom{10}{6}p^{6}(1 - p)^{4}}
+    \\
+    &=\dbinom{7}{5}\bigg/\dbinom{10}{6} = \dfrac{7!}{5!2!}\bigg/\dfrac{10!}{6!4!} = \dfrac{7!}{5!2!}\cdot\dfrac{6!4!}{10!} = \dfrac{6\cdot 4\cdot 3}{10\cdot 9\cdot 8} = \dfrac{1}{10} = 0.1.
+\end{align*}
+\end{solution}
+
+\begin{problem}{4.59}\normalfont
+If you buy a lottery ticket in $50$ lotteries, in each of which your chance of winning a prize is $\tfrac{1}{100}$, what is the (approximate) probability that you will win a prize
+\begin{enumerate}[label=(\alph*)]
+    \item at least once?
+    \item exactly once?
+    \item at least twice?
+\end{enumerate}
+\end{problem}
+\begin{solution}
+Let $X$ be the number of prizes.
+We say that $X$ has a binomial distribution with parameters $n$ and $p$.
+By central limited theorem, $X$ has Poison distribution as well:
+\begin{equation*}
+    X\sim\Bin(n, p)\sim\Po(\lambda),
+\end{equation*}
+where $\lambda = np$, then
+\begin{equation*}
+    \P(X = i)\approx e^{-\lambda}\dfrac{\lambda^{i}}{i!}.
+\end{equation*}
+\begin{enumerate}[label=(\alph*)]
+    \item $\P(X \geqslant 1)$:
+    \begin{equation*}
+        \P(X \geqslant 1) = 1 - \P(X = 0) = 1 - \dfrac{e^{-1/2}(1/2)^{0}}{0!} \approx 0.393.
+    \end{equation*}
+    
+    \item $\P(X = 1)$:
+    \begin{equation*}
+        \P(X = 1) = \dfrac{e^{-1/2}(1/2)^{1}}{1!} \approx 0.303.
+    \end{equation*}
+    
+    \item $\P(X \geqslant 2)$:
+    \begin{equation*}
+        \P(X \geqslant 2) = 1 - \P(X = 0) - \P(X = 1) \approx 0.393 - 0.303 \approx 0.09.
+    \end{equation*}
+\end{enumerate}
+\end{solution}
+
+\newpage
+\section{Continuous Random Variables}
+
+\begin{problem}{5.7}\normalfont
+The density function of $X$ is given by
+\begin{equation*}
+    f(x) = 
+    \begin{cases}
+    a + bx^{2},& 0 \leqslant x \leqslant 1,
+    \\
+    0, &\text{otherwise.}
+    \end{cases}
+\end{equation*}
+If $\E[X] = \tfrac{3}{5}$, find $a$ and $b$.
+\end{problem}
+\begin{solution}
+The distribution density is non-negative $\forall x$ and is normalized to unity, i.e.
+\begin{equation*}
+    \int_{-\infty}^{\infty}f(x)\dif x = 1.\tag{5.7.1}
+\end{equation*}
+Since we know the expression for the $f(x)$, we can calculate the probability that the value of $x$ falls into the interval $[0, 1]$:
+\begin{equation*}
+    \P(0\leqslant x\leqslant 1) = \int_{0}^{1}\left(a + bx^{2}\right)\dif x.\tag{5.7.2}
+\end{equation*}
+Combining (5.7.1) and (5.7.2), we have
+\begin{equation*}
+    \int_{0}^{1}\left(a + bx^{2}\right)\dif x = 1.
+\end{equation*}
+\begin{align*}
+    \int_{0}^{1}\left(a + bx^{2}\right)\dif x &= \int_{0}^{1}a\dif x + \int_{0}^{1}bx^{2}\dif x =
+    \\
+    &= a\int_{0}^{1}1\cdot\dif x + b\int_{0}^{1}x^{2}\dif x = ax|_{0}^{1} + b\cdot\left.\dfrac{x^{3}}{3}\right|_{0}^{1} =  a + \dfrac{1}{3}b.\tag{5.7.3}
+\end{align*}
+Continuous expected value is defined as
+\begin{equation*}
+    \E[X] = \int_{-\infty}^{\infty}xf(x)\dif x.
+\end{equation*}
+Using the conditions of the problem, we obtain
+\begin{equation*}
+    \int_{0}^{1}x(a + bx^{2})\dif x = \dfrac{3}{5}.
+\end{equation*}
+\begin{align*}
+    \int_{0}^{1}x(a + bx^{2})\dif x &=\int_{0}^{1}(ax + bx^{3})\dif x =\int_{0}^{1}ax\dif x + \int_{0}^{1}bx^{3}\dif x = 
+    \\
+    &= a\int_{0}^{1}x\dif x + b\int_{0}^{1}x^{3}\dif x = a\cdot\left.\dfrac{x^{2}}{2}\right|_{0}^{1} + b\cdot\left.\dfrac{x^{4}}{4}\right|_{0}^{1} = \dfrac{1}{2}a + \dfrac{1}{4}b.\tag{5.7.4}
+\end{align*}
+Combining the results from (5.7.3) and (5.7.4), we get the system of linear equations:
+\begin{equation*}
+    \begin{cases}
+        a + \frac{1}{3}b &= 1
+        \\
+        \frac{1}{2}a +  \dfrac{1}{4}b &= \frac{3}{5}.
+    \end{cases}
+\end{equation*}
+By Gaussian elimination we have
+\begin{equation*}
+    \begin{pmatrix} 1 & 1/3 & 1 \\ 1/2 & 1/4 & 3/5 \end{pmatrix} \stackrel{(1)}{\longrightarrow} \begin{pmatrix} 1 & 1/3 & 1 \\ 0 & 1/12 & 1/10 \end{pmatrix} \stackrel{(2)}{\longrightarrow} \begin{pmatrix} 1 & 1/3 & 1 \\ 0 & 1 & 6/5 \end{pmatrix} \stackrel{(3)}{\longrightarrow}\begin{pmatrix} 1 & 0 & 3/5 \\ 0 & 1 & 6/5 \end{pmatrix}.
+\end{equation*}
+\begin{enumerate}[label=(\arabic*)]
+    \item Subtract from the second row the first one multiplied by $\tfrac{1}{2}$;
+    \item Multiply the second row by $12$;
+    \item Subtract from the first row the second one multiplied by $\tfrac{1}{3}$.
+\end{enumerate}
+Hence,
+\begin{equation*}
+    a = \dfrac{3}{5},\quad b = \dfrac{6}{5}.
+\end{equation*}
+\end{solution}
+
+\newpage
+\begin{problem}{5.15(b, c, e)}\normalfont
+If $X$ is a normal random variable with parameters $\mu = 10$ and $\sigma^{2} = 36$, compute
+\begin{enumerate}%[label=(\alph*)]
+    \item[(b)] $\P(4 < X < 16)$;
+    \item[(c)] $\P(X < 8)$;
+    \item[(e)] $\P(X > 16)$.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+Since $X$ is a normal random variable, we can use transformation:
+\begin{equation*}
+    Z = \dfrac{X - \mu}{\sigma}\sim\Norm\left(\mu, \sigma^{2}\right).
+\end{equation*}
+\begin{enumerate}
+    \item[(b)] $\P(4 < X < 16)$:
+    \begin{align*}
+        \P(4 < X < 16) &= \P\left(\dfrac{4 - 10}{6} < \dfrac{X - \mu}{\sigma} < \dfrac{16 - 10}{6} \right)
+        \\
+        &=\P(-1 < Z < 1)
+        \\
+        &=\Phi(1) - \Phi(-1) = 0.8414 - 0.15866 = 0.68274.
+    \end{align*}
+    
+    \item[(c)] $\P(X < 8)$:
+    \begin{align*}
+        \P(X < 8) &= P\left(\dfrac{X -\mu}{\sigma} < \dfrac{8 - 10}{6}\right)
+        \\
+        &=\P\left(Z < -\dfrac{1}{3}\right)
+        \\
+        &=\Phi\left(-\dfrac{1}{3}\right) = 0.3694.
+    \end{align*}
+    
+    \item[(e)] $\P(X > 16)$:
+    \begin{align*}
+        \P(X > 16) &= \P\left(\dfrac{X -\mu}{\sigma} > \dfrac{16 - 10}{6}\right)
+        \\
+        &=\P(Z > 1)
+        \\
+        &=1 - \Phi(1) = 0.1586.
+    \end{align*}
+\end{enumerate}
+\end{solution}
+
+\begin{problem}{5.19}\normalfont
+Let $X$ be a normal random variable with mean $12$ and variance $4$. 
+Find the value of $c$ such that $\mathbb{P}(X > c) = 0.1$.
+\end{problem}
+\begin{solution}
+Since $X$ is a normal random variable, we can use transformation:
+\begin{equation*}
+    Z = \dfrac{X -\mu}{\sigma},
+\end{equation*}
+where $\mu$ is mean and $\sigma = \sqrt{\Var}$.
+Since $\mu = 12$ and $\sigma = \sqrt{\Var} = 2$, we have
+\begin{align*}
+    \P(X > c) &=\P\left(\dfrac{X - 12}{2} > \dfrac{c - 12}{2}\right)
+    \\
+    &= 1 -\P\left(\dfrac{X - 12}{2}\leqslant\dfrac{c - 12}{2}\right)
+    \\
+    &= 1 -\Phi\left(\dfrac{c - 12}{2}\right) = 0.1.
+\end{align*}
+From the standard normal table we have
+\begin{equation*}
+    \dfrac{c - 12}{2}\approx 1.28.
+\end{equation*}
+Hence,
+\begin{equation*}
+    c = 14.56.
+\end{equation*}
+\end{solution}
+
+\begin{problem}{5.25}\normalfont
+Each item produced by a certain manufacturer is, independently, of acceptable quality with probability $0.95$. 
+Approximate the probability that at most $10$ of the next $150$ items produced are unacceptable.
+\end{problem}
+\begin{solution}
+Let $X$ be a number of unacceptable items.
+We say that $X$ has a binomial distribution with parameters $n$ and $p$:
+\begin{equation*}
+    X\sim\Bin(n, p)\sim\Bin(150, 0.05)
+\end{equation*}
+Now we use the connection between distributions:
+\begin{equation*}
+    \Bin(n, p)\sim\Norm(\mu,\sigma^{2}),
+\end{equation*}
+where $\mu = np$ and $\sigma^{2} = np(1 - p)$.
+\begin{equation*}
+    X\sim\Norm(7.5, 7.125).
+\end{equation*}
+We denote $U$ as an event of 10 of the next 150 items produced to be unacceptable.
+\begin{align*}
+    \P(U) &=\P(X \leqslant 10)
+    \\
+    &=\P\left(\dfrac{X -\mu}{\sigma}\leqslant\dfrac{10 - 7.5}{2.67}\right)
+    \\
+    &=\P(Z\leqslant 0.936) 
+    \\
+    &=\Phi(0.936)
+    \\
+    &= 0.8264.
+\end{align*}
+\end{solution}
+
+\begin{problem}{5.33}\normalfont
+The number of years a radio functions is exponentially distributed with parameter $\lambda = \tfrac{1}{8}$. 
+If Jones buys a used radio, what is the probability that it will be working after an additional $8$ years?
+\end{problem}
+\begin{solution}
+Let $s$ be the number of years the radio functions.
+Then, what we need to find is
+\begin{equation*}
+    \P(X > 8\mid X > s).
+\end{equation*}
+Since $s$ is exponentially distributed, it has the memoryless property.
+That is, for some $s$ and shift $t$ we have
+\begin{equation*}
+    \P(X > s + t\mid X > s) = \P(X > t).
+\end{equation*}
+In the case of our problem, $s$ is unknown and $t = 8$.
+The probability that the radio will last an additional $8$ years is the same as if computing
+the probability that $X > 8$:
+\begin{align*}
+    \P(X > 8) &= \int_{8}^{\infty}\dfrac{1}{8}\exp\left(-\dfrac{1}{8}x\right)\dif x =
+    \\
+    &= \dfrac{1}{8}\int_{8}^{\infty}\exp\left(-\dfrac{1}{8}x\right)\dif x = -\left.\exp\left(-\dfrac{1}{8}x\right)\right|_{0}^{\infty}.
+\end{align*}
+We consider the upper limit as the limit of the function:
+\begin{equation*}
+    \lim_{x\to\infty}\left[-\exp\left(-\dfrac{1}{8}x\right)\right] = \lim_{x\to\infty}\left[1\bigg/\exp\left(\dfrac{1}{8}x\right)\right] = 0.
+\end{equation*}
+Hence,
+\begin{equation*}
+    0 - \exp(0) = -\exp(1) = \exp(-1) \equiv e^{-1}.
+\end{equation*}
+\end{solution}
+\end{document}
