@@ -1,0 +1,411 @@
+\documentclass{article}[12pt]
+\usepackage[utf8]{inputenc} 
+\usepackage{amsthm}
+\usepackage{hhline}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage[top=1.00cm, bottom=2.50cm, left=3.00cm, right=2.50cm]{geometry}
+% --------------------------------
+\newenvironment{solution}
+  {\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]}
+  {\end{proof}}
+% --------------------------------
+\newtheorem{innercustomprblm}{Problem}
+\newenvironment{problem}[1]
+  {\renewcommand\theinnercustomprblm{#1}\innercustomprblm}
+  {\endinnercustomprblm}
+% --------- Distributions ---------
+\DeclareMathOperator{\Po}{Po}
+\DeclareMathOperator{\Norm}{N}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Geo}{Geo}
+% --------------------------------
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+% --------------------------------
+\renewcommand{\P}{\mathbb{P}}
+% --------------------------------
+\title{Probability Theory \\ Homework Assignment 3}
+\author{Bulat Khamitov, MSSA191}
+\date{October 21, 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Jointly Distributed Random Variables}
+
+\begin{problem}{6.11}\normalfont
+A television store owner figures that $45$ percent of the customers entering his store will purchase an ordinary television set, $15$ percent will purchase a plasma television set, and $40$ percent will just be browsing. 
+If $5$ customers enter his store on a given day, what is the probability that he will sell exactly 2 ordinary sets and $1$ plasma set on that day?
+\end{problem}
+\begin{solution}
+We denote the following:
+\begin{itemize}
+    \item $X_{1}$ -- ordinary set;
+    \item $X_{2}$ -- plasma set;
+    \item $X_{3}$ -- just browsing.
+\end{itemize}
+Every person \textit{buys} or \textit{does not buy} a TV set independently from each other.
+Hence, we can say that random vector $(X_{1}, X_{2}, X_{3})$ has multidimensional distribution
+\begin{equation*}
+    \P(X_{1} = x_{1}, X_{2} = x_{2}, \ldots, X_{r} = x_{r}) = \frac{n!}{n_{1}!n_{2}!\ldots n_{r}!}p_{1}^{n_{1}}p_{2}^{n_{2}}\ldots p_{r}^{n - \sum n_{i}}.\tag{6.11.1}
+\end{equation*}
+Taking into account the conditions of the problem, we obtain
+\begin{equation*}
+    X_{1} = 2,\quad X_{2} = 1,\quad X_{3} = 5 - X_{1} - X_{2} = 2.
+\end{equation*}
+Hence, using (6.11.1), we have
+\begin{equation*}
+    \P(X_{1} = 2, X_{2} = 1, X_{3} = 2) = \frac{5!}{2!1!2!}(0.45)^{2}\cdot(0.15)^{2}\cdot(0.40)^{2} = 0.1457.
+\end{equation*}
+\end{solution}
+
+\begin{problem}{6.20}\normalfont
+The joint density of $X$ and $Y$ is given by
+\begin{equation*}
+    f(x, y) = 
+    \begin{cases}
+        xe^{-(x+y)}, &x > 0,\quad y > 0,
+        \\
+        0, &\text{otherwise}.
+    \end{cases}
+\end{equation*}
+Are $X$ and $Y$ independent? 
+If, instead, $f(x, y)$ were given by
+\begin{equation*}
+    f(x, y) = 
+    \begin{cases}
+        2, &0 < x < y,\quad 0 < y < 1,
+        \\
+        0, &\text{otherwise}.
+    \end{cases}
+\end{equation*}
+would $X$ and $Y$ be independent?
+\end{problem}
+\begin{solution}
+We need to check if $f(x, y) = f_{X}(x)f_{Y}(y)$ holds.
+\begin{enumerate}
+    \item For $x > 0$ we have
+    \begin{equation*}
+        f_{X}(x) = \int_{0}^{\infty}xe^{-(x+y)}\dif y = xe^{-x}\cdot\left(-e^{-y}\right)\Big|_{0}^{\infty} = xe^{-x}.
+    \end{equation*}
+    For $y > 0$ we have
+    \begin{align*}
+        f_{Y}(y) &= \int_{0}^{\infty}xe^{-(x+y)}\dif x = e^{-y}\int_{0}^{\infty}xe^{-x}\dif x
+        \\
+        &= \begin{bmatrix} \text{partial} & \text{integration:} \\ u = x & \dif v = e^{-x} \\ \dif u = \dif x & v = -e^{-x}\end{bmatrix} = e^{-y}\left(uv\Big|_{0}^{\infty} - \int_{0}^{\infty}v\dif u\right)
+        \\
+        &= e^{-y}\left(-xe^{-x}\Big|_{0}^{\infty} + \int_{0}^{\infty}e^{-x}\dif x\right) = e^{-y}.
+    \end{align*}
+    We obtained that $f(x, y) = f_{X}(x)f_{Y}(y)$.
+    Hence, $X$ and $Y$ are independent.
+    \item We do similar for the second case.
+    For $0 < y < 1$ we have
+    \begin{equation*}
+        f_{X}(x) = \int_{x}^{1}2\dif y = 2\int_{x}^{1}\dif y = 2\cdot y\Big|_{x}^{1} = 2 - 2x.
+    \end{equation*}
+    And for $0 < x < y$ we have
+    \begin{equation*}
+        f_{Y}(y) = \int_{0}^{y}2\dif x = 2\int_{0}^{y}\dif x = 2\cdot x\Big|_{y}^{o} = 2y.
+    \end{equation*}
+    We obtained that $f(x, y) = (2 -2x)2y \neq f_{X}(x)f_{Y}(y)$.
+    Hence, $X$ and $Y$ are \textit{not} independent.
+\end{enumerate}
+\end{solution}
+
+\begin{problem}{6.24(a-c)}\normalfont
+Consider independent trials, each of which results in outcome $i$, $i=0,1,\ldots,k$, with probability $p_{i}$, $\sum_{i=0}^{k}p_{i} = 1$.
+Let $N$ denote the number of trials needed to obtain an outcome that is not equal to $0$, and let $X$ be that outcome.
+\begin{enumerate}[label=(\alph*)]
+    \item Find $\P(N = n)$, $n \geqslant 1$;
+    \item Find $\P(X = j)$, $j = \overline{1,k}$;
+    \item Show that $\P(N = n, X = j) = \P(N = n)\P(X = j)$.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\text{}
+\begin{enumerate}
+    \item[(a)] The condition implies that in first $n-1$ trials we obtain outcomes equal to $0$ and in $n$-th trial we obtain any other outcome rather than $0$.
+    $N$ is a geometric random variable with parameter of success $1 - p_{0}$ (not getting $0$ as the outcome):
+    \begin{equation*}
+        N\sim\Geo(p_{0})\sim N =\begin{cases} 0, & p_{0} \\ 1, & 1- p_{0}\end{cases}
+    \end{equation*}
+    with probability mass function
+    \begin{equation*}
+        \P(N = n) = p_{0}^{n-1}(1 - p_{0}).
+    \end{equation*}
+    \item[(b)] The condition on $X$ is that is does not equal to $0$.
+    If we define new random variable $Y$ to be the outcome of the trial, then it will have distribution such that $\P(Y = y) = p_{y}$:
+    \begin{equation*}
+        \P(X = j) =\P(Y = j\mid Y\neq 0) = \frac{\P(Y = j)}{\P(Y\neq 0)} = \frac{p_{j}}{1 - p_{0}}.
+    \end{equation*}
+    \item[(c)] The condition implies that $n-1$ trials have $0$ as the outcome, the $n$-th trial has $j$ as the outcome.
+    Since the trials are independent, the probability of this is
+    \begin{equation*}
+        \P(N = n, X = j) = p_{0}^{n-1}p_{i}.
+    \end{equation*}
+    We show that
+    \begin{equation*}
+        \P(N = n)\P(X = j) = \left(p_{0}^{n-1}(1 - p_{0})\right)\left(\frac{p_{j}}{1 - p_{0}}\right) = p_{0}^{n-1}p_{i} = \P(N = n, X = j).
+    \end{equation*}
+\end{enumerate}
+\end{solution}
+
+\begin{problem}{6.31(a)}\normalfont
+According to the U.S. National Center for Health Statistics, $25.2$ percent of males and $23.6$ percent of females never eat breakfast. 
+Suppose that random samples of $200$ men and $200$ women are chosen.
+Approximate the probability that
+\begin{enumerate}[label=(\alph*)]
+    \item at least $110$ of these $400$ people never eat breakfast.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+Let $M$ and $W$ be the number of men and women that never eat breakfast respectively.
+From exact definition we have
+\begin{gather*}
+    M\sim\Bin(n, p_{M})\sim\Bin(200, 0.252),
+    \\
+    W\sim\Bin(n, p_{W})\sim\Bin(200, 0.236).
+\end{gather*}
+We will use normal approximation due to the complexity of doing approximations with binomial one:
+\begin{gather*}
+    M\sim\Norm(\mu_{M}, \sigma_{M}^{2}),
+    \\
+    W\sim\Norm(\mu_{W}, \sigma_{W}^{2}),
+\end{gather*}
+where
+\begin{gather*}
+    \mu_{M} = \E[M] = np_{M} = 200\cdot 0.252 = 50.4,\quad\sigma_{M}^{2} = \Var[M] = np_{M}(1 - p_{M}) = 200\cdot 0.252(1 - 0.252) = 37.7,
+    \\
+    \mu_{W} = \E[W] = np_{W} = 200\cdot 0.236 = 47.2,\quad\sigma_{W}^{2} = \Var[W] = np_{W}(1 - p_{W}) = 200\cdot 0.236(1 - 0.236) = 36.1.
+\end{gather*}
+We want to find $\P(M + W \geqslant 110)$.
+We approximate $M + W$ by a normal random variable distribution with $\mu = 50.4 + 47.2 = 97.6$ and $\sigma^{2} = 37.7 + 36.1 = 73.8$ using the property of the sum of 2 independent variables:
+\begin{align*}
+    \P(M + W \geqslant 110) = \P(110 \leqslant M + W) &= \P\left(\frac{100 - 97.6}{\sqrt{73.8}} \leqslant \frac{M + W - 97.6}{\sqrt{73.8}}\right)
+    \\
+    &= 1- \Phi\left(\frac{100 - 97.6}{\sqrt{73.8}}\right)
+    \\
+    &= 1 - \Phi(1.44) = 1 - 0.9251 = 0.0749.
+\end{align*}
+\end{solution}
+
+\begin{problem}{6.40}\normalfont
+The joint probability mass function of $X$ and $Y$ is given by
+\begin{equation*}
+    \begin{matrix}
+        p(1,1) = 1/8 & p(1,2) = 1/4
+        \\
+        p(2,1) = 1/8 & p(2,2) = 1/2
+    \end{matrix}
+\end{equation*}
+\begin{enumerate}[label=(\alph*)]
+    \item Compute the conditional mass function of $X$ given $Y = i$, $i=1,2$;
+    \item Are $X$ and $Y$ independent?
+    \item Compute $\P(XY \leqslant 3)$,  $\P(X + Y > 2)$,  $\P(X/Y > 1)$.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\text{}
+\begin{enumerate}[label=(\alph*)]
+    \item Suppose we are given that $Y = 1$.
+    Probability for that is
+    \begin{equation*}
+        \P(Y = 1) = p(1,1) + p(2,1) = \frac{1}{8} + \frac{1}{8} = \frac{1}{4}.
+    \end{equation*}
+    Hence,
+    \begin{gather*}
+        \P(X = 1\mid Y = 1) = \frac{\P(X = 1, Y = 1)}{\P(Y = 1)} = \frac{p(1,1)}{\P(Y = 1)} = \frac{1/8}{1/4} = \frac{1}{2},
+        \\
+        \P(X = 2\mid Y = 1) = \frac{\P(X = 2, Y = 1)}{\P(Y = 1)} = \frac{p(2,1)}{\P(Y = 1)} = \frac{1/8}{1/4} = \frac{1}{2}.
+    \end{gather*}
+    Suppose we are given that $Y = 2$.
+    Probability for that is
+    \begin{equation*}
+        \P(Y = 2) = p(1,2) + p(2,2) = \frac{1}{4} + \frac{1}{2} = \frac{3}{4}.
+    \end{equation*}
+    Hence,
+    \begin{gather*}
+        \P(X = 1\mid Y = 2) = \frac{\P(X = 1, Y = 2)}{\P(Y = 2)} = \frac{p(1,2)}{\P(Y = 2)} = \frac{1/4}{3/4} = \frac{1}{3},
+        \\
+        \P(X = 2\mid Y = 2) = \frac{\P(X = 2, Y = 2)}{\P(Y = 2)} = \frac{p(2,2)}{\P(Y = 2)} = \frac{1/2}{3/4} = \frac{2}{3}.
+    \end{gather*}
+    \item We see that
+    \begin{equation*}
+        \P(X = 2) = p(2,1) + p(2,2) = \frac{1}{8} + \frac{1}{2} = \frac{5}{8},
+    \end{equation*}
+    which \textit{is not} equal to $\P(X = 2\mid Y = 2)$.
+    Hence, $X$ and $Y$ are \textit{not} independent.
+    \item \text{}
+    \begin{align*}
+        \P(XY \leqslant 3) &= 1 - \P(XY = 4) = 1 - P(X = 2\mid Y = 2)
+        \\
+        &= 1 - \P(X = 2\mid Y = 2)
+        \\
+        &= 1 - \frac{2}{3}\cdot\frac{3}{4} = \frac{1}{2}.
+    \end{align*}
+    \begin{align*}
+        \P(X + Y > 2) &= 1 - \P(X + Y = 2) = 1 - \P(X = 1, Y = 1)
+        \\
+        &= 1 - \P(X = 1, Y = 1)\P(Y = 1)
+        \\
+        &= 1 - \frac{1}{2}\cdot\frac{1}{4} = \frac{7}{8}.
+    \end{align*}
+    \begin{align*}
+        \P(X/Y > 1) &= \P(X > Y) = \P(X = 2, Y = 1)
+        \\
+        &= \P(X = 2, Y = 1)\P(Y = 1)
+        \\
+        &= \frac{1}{2}\cdot\frac{1}{4} = \frac{1}{8}.
+    \end{align*}
+\end{enumerate}
+\end{solution}
+
+\newpage
+
+\section{Properties of Expectation}
+
+\begin{problem}{7.22}
+\end{problem}
+\begin{solution}
+We define random variable $X_i$, $i=\overline{1,6}$ as the number of additional throws that are needed to jump from $i-1$ collected distinct numbers to $i$ distinct numbers.
+Because of the nature of the problem, $X$ has geometric distribution with parameter of success $\frac{6 - i + 1}{6}$:
+\begin{equation*}
+    X\sim\Geo\left(\frac{6 - i + 1}{6}\right).
+\end{equation*}
+The total number of needed throws is $N = \sum_{i}X_{i}$.
+Hence,
+\begin{equation*}
+    \E[N] = \sum_{i}\E[X_{i}] = \sum_{i}1\Big/\frac{6 - i + 1}{6} = \sum_{i}\frac{6}{6 - i + 1} = 14.7
+\end{equation*}
+\end{solution}
+
+\begin{problem}{7.30}
+\end{problem}
+\begin{solution}
+\begin{gather*}
+    \E\left[(X - Y)^{2}\right]] = \E[X^{2} - 2XY + Y^{2}] = \E[X^{2}] - 2\E[X]\E[Y] + \E[Y^{2}] =
+    \\
+    \begin{bmatrix}
+        \E[X^{2}] = \Var X + \E[X]^{2} 
+        \\
+        \E[Y^{2}] = \Var Y + \E[Y]^{2}
+        \\
+        \E[X] = \E[Y] = \mu
+        \\
+        \Var X = \Var Y = \sigma^{2}
+    \end{bmatrix}
+    \\
+    = \Var X + \E[X]^{2} - 2\E[X]\E[Y] + \Var Y + \E[Y]^{2} =
+    \\
+    = \sigma^{2} + \mu^{2} - 2\mu^{2} + \sigma^{2} + \mu^{2} =
+    \\
+    = 2\sigma^{2}.
+\end{gather*}
+\end{solution}
+
+\begin{problem}{7.39}
+\end{problem}
+\begin{solution}
+\text{}
+\begin{itemize}
+    \item $j = 0$:
+    \begin{equation}
+        \Cov(Y_{n}, Y_{n}) = \Var(X_{n} + X_{n+1} + X_{n+2}) = 3\sigma^{2}.
+    \end{equation}
+    \item $j =1$:
+    \begin{align*}
+        \Cov(Y_{n}, Y_{n+1}) &= \Cov(X_{n} + X_{n+1} + X_{n+2}, X_{n+1} + X_{n+2} + X_{n+3})
+        \\
+        &= \Var(X_{n+1}) + \Var(X_{n+2}) 
+        \\
+        &= 2\sigma^{2}.
+    \end{align*}
+    \item $j\geqslant 3$:
+    \begin{equation*}
+        \Cov(Y_{n}, Y_{n+j}) = 0.
+    \end{equation*}
+    \end{itemize}
+\end{solution}
+
+\begin{problem}{7.49}
+\end{problem}
+\begin{solution}
+We denote the following:
+\begin{itemize}
+    \item $X$ -- number of Heads within first $10$ tosses;
+    \item $Y$ -- number of Heads in range within toss number from $4$ to $10$;
+    \item $A$ -- first coin has been chosen;
+    \item $B$ -- second coin has been chosen;
+    \item $C$ -- 2 Heads within first $2$ tosses.
+\end{itemize}
+We need to find
+\begin{equation*}
+    \E_{C}[X] = 2 + \E_{C}[X].
+\end{equation*}
+By the law of total probability we have
+\begin{equation*}
+    \E_{C}[X] = \E_{C}[Y\mid A]\P_{C}(A) +  \E_{C}[Y\mid B]\P_{C}(B).
+\end{equation*}
+By Bayes rule we have
+\begin{equation*}
+    \P_{C}(A) = \P(A\mid C)\frac{\P(C\mid A)\P(A)}{\P(C)} = \frac{\P(C\mid A)}{\P(C\mid B) + \P(C\mid B)}
+\end{equation*}
+Let us take a closer look:
+\begin{gather*}
+    \P(C\mid A) = \Bin(n = 3, p = 0.7) = \binom{3}{2}\cdot(0.4)^{2}\cdot(0.6),
+    \\
+    \P(C\mid B) = \Bin(n = 3, p = 0.4) = \binom{3}{2}\cdot(0.7)^{2}\cdot(0.3).
+\end{gather*}
+Hence,
+\begin{equation*}
+    \P(A\mid C) = \frac{32}{81}.
+\end{equation*}
+That implies that
+\begin{equation*}
+    \P_{C}(B) = \P(B\mid C) = 1 - \P(A\mid C) = \frac{49}{81}.
+\end{equation*}
+Finally,
+\begin{gather*}
+    \E_{C}[T\mid A] = \E[Y\mid A] = 7\cdot 0.4 = 2.8,
+    \\
+    \E_{C}[T\mid B] = \E[Y\mid B] = 7\cdot 0.7 = 4.9.
+\end{gather*}
+Hence,
+\begin{equation*}
+    \E_{C}[X] = \E[X\mid C] \approx 6.0704.
+\end{equation*}
+\end{solution}
+
+\begin{problem}{7.61(a-c)}
+\end{problem}
+\begin{solution}
+\text{}
+\begin{enumerate}[label=(\alph*)]
+    \item
+    \begin{align*}
+        \P(M \leqslant x) &= \sum_{n=1}^{\infty}\P(M \leqslant x\mid N = n)\P(N = n)
+        \\
+        &= \sum_{n=1}^{\infty}F^{n}(x)p(1 - p)^{n-1}
+        \\
+        &= \frac{pF(x)}{1 - (1 - p)F(x)}.
+    \end{align*}
+    \item
+    \begin{equation*}
+        \P(X \leqslant x\mid N = 1) = F(x).
+    \end{equation*}
+    \item
+    \begin{equation*}
+        \P(M\leqslant x\mid N > 1) = F(x)\P(M \leqslant x).
+    \end{equation*}
+\end{enumerate}
+\end{solution}
+\end{document}
