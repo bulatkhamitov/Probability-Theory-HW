@@ -1,0 +1,53 @@
+\documentclass{article}[12pt]
+\usepackage[utf8]{inputenc} 
+\usepackage{amsthm}
+\usepackage{hhline}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage[top=1.00cm, bottom=2.50cm, left=3.00cm, right=2.50cm]{geometry}
+% --------------------------------
+\newenvironment{solution}
+  {\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]}
+  {\end{proof}}
+% --------------------------------
+\newtheorem{innercustomprblm}{Problem}
+\newenvironment{problem}[1]
+  {\renewcommand\theinnercustomprblm{#1}\innercustomprblm}
+  {\endinnercustomprblm}
+% --------- Distributions ---------
+\DeclareMathOperator{\Po}{Po}
+\DeclareMathOperator{\Norm}{N}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Geo}{Geo}
+% --------------------------------
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+% --------------------------------
+\renewcommand{\P}{\mathbb{P}}
+% --------------------------------
+\title{Homework Assignment}
+\author{Bulat Khamitov}
+
+\begin{document}
+
+\maketitle
+
+\section{Part 1}
+
+\begin{problem}{1}
+Problem statement.
+\end{problem}
+
+\begin{solution}
+\[
+    (x + y)^2 = x^2 + 2xy + y^2.
+\]
+\end{solution}
+\end{document}
