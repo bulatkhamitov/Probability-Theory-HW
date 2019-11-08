@@ -2,4 +2,4 @@
 
 * HW 1 is on check
 * HW 2 is on check
-* HW 3 is in process
+* HW 3 is on check
