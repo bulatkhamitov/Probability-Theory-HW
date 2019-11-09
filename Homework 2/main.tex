@@ -1,5 +1,5 @@
 \documentclass{article}[12pt]
-\usepackage[utf8]{inputenc} 
+\usepackage[utf8]{inputenc}
 \usepackage{amsthm}
 \usepackage{hhline}
 \usepackage{amssymb}
@@ -9,27 +9,29 @@
 \usepackage{multirow}
 \usepackage{hyperref}
 \usepackage[top=1.00cm, bottom=2.50cm, left=3.00cm, right=2.50cm]{geometry}
-
+% --------------------------------
 \newenvironment{solution}
   {\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]}
   {\end{proof}}
-  
+% --------------------------------
 \newtheorem{innercustomprblm}{Problem}
 \newenvironment{problem}[1]
   {\renewcommand\theinnercustomprblm{#1}\innercustomprblm}
   {\endinnercustomprblm}
-
-\DeclareMathOperator{\dif}{d}
+% --------- Distributions ---------
 \DeclareMathOperator{\Po}{Po}
 \DeclareMathOperator{\Norm}{N}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Bin}{Bin}
 \DeclareMathOperator{\Exp}{Exp}
-
+\DeclareMathOperator{\Geo}{Geo}
+% --------------------------------
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+% --------------------------------
 \renewcommand{\P}{\mathbb{P}}
-
-\newcommand{\E}{\mathbb{E}}
-
+% --------------------------------
 \title{Probability Theory \\ Homework Assignment 2}
 \author{Bulat Khamitov, MSSA2019}
 \date{September 30, 2019}
@@ -41,8 +43,8 @@
 \section{Random Variables}
 
 \begin{problem}{4.25}\normalfont
-Two coins are to be flipped. 
-The first coin will land on heads with probability $0.6$, the second with probability $0.7$. 
+Two coins are to be flipped.
+The first coin will land on heads with probability $0.6$, the second with probability $0.7$.
 Assume that the results of the flips are independent, and let $X$ equal the total number of heads that result.
 \begin{enumerate}[label=(\alph*)]
     \item Find $\mathbb{P}(X = 1)$.
@@ -66,7 +68,7 @@ We denote the following:
     \end{equation*}
     Coin flips are independent:
     \begin{align*}
-        \P(\text{1st -- H, 2nd -- T}) &+ \P(\text{1st -- T, 2nd -- H}) = 
+        \P(\text{1st -- H, 2nd -- T}) &+ \P(\text{1st -- T, 2nd -- H}) =
         \\
         &= \P(\text{1st -- H})\P(\text{2nd -- T}) + \P(\text{1st -- T})\P(\text{2nd -- H}).
     \end{align*}
@@ -80,7 +82,7 @@ We denote the following:
     \begin{equation*}
         \P(X = 1) = \P(\text{coin landed on heads once}) = 0.6\cdot 0.3 + 0.4 \cdot 0.7 = 0.46.
     \end{equation*}
-    
+
     \item Since $X$ is the number of heads in result, we have to find
     \begin{equation*}
         \P(X = 0),\quad\P(X = 1),\quad\P(X = 2)
@@ -113,7 +115,7 @@ We denote the following:
 \end{solution}
 
 \begin{problem}{4.27}\normalfont
-An insurance company writes a policy to the effect that an amount of money $A$ must be paid if some event $E$ occurs within a year. 
+An insurance company writes a policy to the effect that an amount of money $A$ must be paid if some event $E$ occurs within a year.
 If the company estimates that $E$ will occur within a year with probability $p$, what should it charge the customer in order that its expected profit will be $10$ percent of $A$?
 \end{problem}
 \begin{solution}
@@ -169,7 +171,7 @@ If $\E[X] = 1$ and $\Var(X) = 5$, find
     \begin{equation*}
         \E[4] + 4\cdot\E[X] + \Var(X) + \E[X]^{2} = 4 + 4\cdot 1 + 5 + 1\cdot 1 = 14.
     \end{equation*}
-    
+
     \item By the properties of variance we have
     \begin{equation*}
         \Var(4 + 3X) = \Var(3X) = 3^{2}\cdot\Var(X) = 9\cdot 5 = 45.
@@ -178,7 +180,7 @@ If $\E[X] = 1$ and $\Var(X) = 5$, find
 \end{solution}
 
 \begin{problem}{4.50(a)}\normalfont
-Suppose that a biased coin that lands on heads with probability $p$ is flipped $10$ times. 
+Suppose that a biased coin that lands on heads with probability $p$ is flipped $10$ times.
 Given that a total of $6$ heads results, find the conditional probability that the first $3$ outcomes are
 \begin{enumerate}[label=(\alph*)]
     \item $h$, $t$, $t$ (meaning that the first flip results in heads, the second in tails, and the third in tails).
@@ -245,12 +247,12 @@ where $\lambda = np$, then
     \begin{equation*}
         \P(X \geqslant 1) = 1 - \P(X = 0) = 1 - \dfrac{e^{-1/2}(1/2)^{0}}{0!} \approx 0.393.
     \end{equation*}
-    
+
     \item $\P(X = 1)$:
     \begin{equation*}
         \P(X = 1) = \dfrac{e^{-1/2}(1/2)^{1}}{1!} \approx 0.303.
     \end{equation*}
-    
+
     \item $\P(X \geqslant 2)$:
     \begin{equation*}
         \P(X \geqslant 2) = 1 - \P(X = 0) - \P(X = 1) \approx 0.393 - 0.303 \approx 0.09.
@@ -264,7 +266,7 @@ where $\lambda = np$, then
 \begin{problem}{5.7}\normalfont
 The density function of $X$ is given by
 \begin{equation*}
-    f(x) = 
+    f(x) =
     \begin{cases}
     a + bx^{2},& 0 \leqslant x \leqslant 1,
     \\
@@ -300,7 +302,7 @@ Using the conditions of the problem, we obtain
     \int_{0}^{1}x(a + bx^{2})\dif x = \dfrac{3}{5}.
 \end{equation*}
 \begin{align*}
-    \int_{0}^{1}x(a + bx^{2})\dif x &=\int_{0}^{1}(ax + bx^{3})\dif x =\int_{0}^{1}ax\dif x + \int_{0}^{1}bx^{3}\dif x = 
+    \int_{0}^{1}x(a + bx^{2})\dif x &=\int_{0}^{1}(ax + bx^{3})\dif x =\int_{0}^{1}ax\dif x + \int_{0}^{1}bx^{3}\dif x =
     \\
     &= a\int_{0}^{1}x\dif x + b\int_{0}^{1}x^{3}\dif x = a\cdot\left.\dfrac{x^{2}}{2}\right|_{0}^{1} + b\cdot\left.\dfrac{x^{4}}{4}\right|_{0}^{1} = \dfrac{1}{2}a + \dfrac{1}{4}b.\tag{5.7.4}
 \end{align*}
@@ -350,7 +352,7 @@ Since $X$ is a normal random variable, we can use transformation:
         \\
         &=\Phi(1) - \Phi(-1) = 0.8414 - 0.15866 = 0.68274.
     \end{align*}
-    
+
     \item[(c)] $\P(X < 8)$:
     \begin{align*}
         \P(X < 8) &= P\left(\dfrac{X -\mu}{\sigma} < \dfrac{8 - 10}{6}\right)
@@ -359,7 +361,7 @@ Since $X$ is a normal random variable, we can use transformation:
         \\
         &=\Phi\left(-\dfrac{1}{3}\right) = 0.3694.
     \end{align*}
-    
+
     \item[(e)] $\P(X > 16)$:
     \begin{align*}
         \P(X > 16) &= \P\left(\dfrac{X -\mu}{\sigma} > \dfrac{16 - 10}{6}\right)
@@ -372,7 +374,7 @@ Since $X$ is a normal random variable, we can use transformation:
 \end{solution}
 
 \begin{problem}{5.19}\normalfont
-Let $X$ be a normal random variable with mean $12$ and variance $4$. 
+Let $X$ be a normal random variable with mean $12$ and variance $4$.
 Find the value of $c$ such that $\mathbb{P}(X > c) = 0.1$.
 \end{problem}
 \begin{solution}
@@ -400,7 +402,7 @@ Hence,
 \end{solution}
 
 \begin{problem}{5.25}\normalfont
-Each item produced by a certain manufacturer is, independently, of acceptable quality with probability $0.95$. 
+Each item produced by a certain manufacturer is, independently, of acceptable quality with probability $0.95$.
 Approximate the probability that at most $10$ of the next $150$ items produced are unacceptable.
 \end{problem}
 \begin{solution}
@@ -423,7 +425,7 @@ We denote $U$ as an event of 10 of the next 150 items produced to be unacceptabl
     \\
     &=\P\left(\dfrac{X -\mu}{\sigma}\leqslant\dfrac{10 - 7.5}{2.67}\right)
     \\
-    &=\P(Z\leqslant 0.936) 
+    &=\P(Z\leqslant 0.936)
     \\
     &=\Phi(0.936)
     \\
@@ -432,7 +434,7 @@ We denote $U$ as an event of 10 of the next 150 items produced to be unacceptabl
 \end{solution}
 
 \begin{problem}{5.33}\normalfont
-The number of years a radio functions is exponentially distributed with parameter $\lambda = \tfrac{1}{8}$. 
+The number of years a radio functions is exponentially distributed with parameter $\lambda = \tfrac{1}{8}$.
 If Jones buys a used radio, what is the probability that it will be working after an additional $8$ years?
 \end{problem}
 \begin{solution}

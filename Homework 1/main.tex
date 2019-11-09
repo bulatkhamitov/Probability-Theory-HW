@@ -1,5 +1,5 @@
 \documentclass{article}[12pt]
-\usepackage[utf8]{inputenc} 
+\usepackage[utf8]{inputenc}
 \usepackage{amsthm}
 \usepackage{hhline}
 \usepackage{amssymb}
@@ -7,25 +7,31 @@
 \usepackage{enumitem}
 \usepackage{csquotes}
 \usepackage{multirow}
-\usepackage[
-top    = 1.00cm,
-bottom = 2.50cm,
-left   = 3.00cm,
-right  = 2.50cm]{geometry}
-
+\usepackage{hyperref}
+\usepackage[top=1.00cm, bottom=2.50cm, left=3.00cm, right=2.50cm]{geometry}
+% --------------------------------
 \newenvironment{solution}
   {\renewcommand\qedsymbol{$\blacksquare$}\begin{proof}[Solution]}
   {\end{proof}}
-  
+% --------------------------------
 \newtheorem{innercustomprblm}{Problem}
 \newenvironment{problem}[1]
   {\renewcommand\theinnercustomprblm{#1}\innercustomprblm}
   {\endinnercustomprblm}
-
+% --------- Distributions ---------
+\DeclareMathOperator{\Po}{Po}
+\DeclareMathOperator{\Norm}{N}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Bin}{Bin}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Geo}{Geo}
+% --------------------------------
+\DeclareMathOperator{\dif}{d}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+% --------------------------------
 \renewcommand{\P}{\mathbb{P}}
-\newcommand{\E}{\mathbb{E}}
-
+% --------------------------------
 \title{Probability Theory \\ Homework Assignment 1}
 \author{Bulat Khamitov, MSSA2019}
 \date{September 22, 2019}
@@ -37,8 +43,8 @@ right  = 2.50cm]{geometry}
 \section{Axioms of Probability}
 
 \begin{problem}{3}\normalfont
-Two dice are thrown. 
-Let E be the event that the sum of the dice is odd, let $F$ be the event that at least one of the dice lands on $1$, and let $G$ be the event that the sum is $5$. 
+Two dice are thrown.
+Let E be the event that the sum of the dice is odd, let $F$ be the event that at least one of the dice lands on $1$, and let $G$ be the event that the sum is $5$.
 Describe the events $EF$, $E\cup F$, $FG$, $EF^{c}$, and $EFG$.
 \end{problem}
 
@@ -49,7 +55,7 @@ We note that $EF = E \cap F$.
     \begin{equation*}
         EF = \left\{(1, 2),\, (1, 4),\, (1, 6),\, (2, 1),\, (4, 1),\, (6, 1)\right\}.
     \end{equation*}
-    
+
     \item $E\cup F$ is the event that the sum of the dice is odd \textbf{or} at least one of the dice lands on $1$:
     \begin{equation*}
         E\cup F =
@@ -61,20 +67,20 @@ We note that $EF = E \cap F$.
         (4, 5), & (5, 2), & (5, 4), & (5, 6), & (6, 3), & (6, 5)
         \end{Bmatrix}.
     \end{equation*}
-    
+
     \item $FG$ is the event that the sum of the dice is odd \textbf{and} the sum is $5$:
     \begin{equation*}
         FG = \left\{(1, 4),\, (4, 1)\right\}.
     \end{equation*}
-    
+
     \item $EFG$ is the event that the sum is odd \textbf{and} the sum is $5$ \textbf{and} at least one of the dice shows a $1$:
     \begin{equation*}
         EFG = EG = \left\{(1, 4),\, (4, 1)\right\}.
     \end{equation*}
-    
+
     \item $EF^{c}$ is the event that the sum of the dice is odd \textbf{and} at least one of the dice is \textbf{not} a $1$:
     \begin{equation*}
-        EF^{c} = 
+        EF^{c} =
         \begin{Bmatrix}
         (2, 3), & (2, 5), & (3, 2), & (3, 4), & (3, 6), & (4, 3),
         \\
@@ -94,12 +100,12 @@ How many outcomes are
 \end{enumerate}
 \end{problem}
 \begin{solution}
- We denote $B$ and $W$ for blue-collar and white-collar respectively. 
+ We denote $B$ and $W$ for blue-collar and white-collar respectively.
  The political affiliations, Republican, Democratic or Independent are respectively denoted by $R$, $D$ and $I$.
 \begin{enumerate}[label=(\alph*)]
     \item The sample space consists of all possible outcomes of this experiment.
     For each player there are $3\cdot 2 = 6$ possible outcomes, so the total number of outcomes is $|\Omega| = 6^{15}$.
-    
+
     \item Let $F$ be the event that at least one of the team members is a blue-collar worker.
     It is easier to consider the event $F^{c}$, which is that all the team members are white-collar workers:
     \begin{equation*}
@@ -109,8 +115,8 @@ How many outcomes are
     \begin{equation*}
         |F| = |\Omega| - |F^{c}| = 6^{15} - (1\cdot 3)^{15}.
     \end{equation*}
-    
-    \item Let $E$ be the event that none of the team members considers himself or herself an Independent. 
+
+    \item Let $E$ be the event that none of the team members considers himself or herself an Independent.
     If $E$ occurs, then all the members are either Republican or Democratic.
     \begin{equation*}
         E = \left\{\{B, W\}\times\{R, D\}^{15}\right\}.
@@ -123,10 +129,10 @@ How many outcomes are
 \end{solution}
 
 \begin{problem}{12}\normalfont
-An elementary school is offering 3 language classes: one in Spanish, one in French, and one in German. 
-The classes are open to any of the 100 students in the school. 
-There are 28 students in the Spanish class, 26 in the French class, and 16 in the German class. 
-There are 12 students that are in both Spanish and French, 4 that are in both Spanish and German, and 6 that are in both French and German. 
+An elementary school is offering 3 language classes: one in Spanish, one in French, and one in German.
+The classes are open to any of the 100 students in the school.
+There are 28 students in the Spanish class, 26 in the French class, and 16 in the German class.
+There are 12 students that are in both Spanish and French, 4 that are in both Spanish and German, and 6 that are in both French and German.
 In addition, there are 2 students taking all 3 classes.
 \begin{enumerate}[label=(\alph*)]
     \item If a student is chosen randomly, what is the probability that he or she is not in any of the language classes?
@@ -142,7 +148,7 @@ We denote the events:
     \item $G$ -- event that randomly chosen student studies German.
 \end{itemize}
 \begin{enumerate}[label=(\alph*)]
-    \item The condition of (a) implies that \enquote{\textbf{not} in Spanish \textbf{and not} in French \textbf{and not} in German}. Hence, we need to find 
+    \item The condition of (a) implies that \enquote{\textbf{not} in Spanish \textbf{and not} in French \textbf{and not} in German}. Hence, we need to find
     \begin{equation*}
         \P\left(S^{c}\cap F^{c}\cap G^{c}\right).
     \end{equation*}
@@ -164,14 +170,14 @@ We denote the events:
         \\
         & = \dfrac{50}{100}.
     \end{align*}
-    Hence, 
+    Hence,
     \begin{equation*}
         \P\left(S^{c}\cap F^{c}\cap G^{c}\right) = 1 - \P\left(S\cup F\cup G\right) = \dfrac{50}{100} = \dfrac{1}{2} = 0.5.
     \end{equation*}
-    
+
     \item The condition of (b) implies that we need to find
     \begin{equation*}
-        \P\left(\text{\enquote{exactly one}}\right). 
+        \P\left(\text{\enquote{exactly one}}\right).
     \end{equation*}
     We know that there are 2 students taking all 3 classes, meaning:
     \begin{enumerate}[label=\arabic*)]
@@ -186,7 +192,7 @@ We denote the events:
     \begin{equation*}
         \P\left(\text{\enquote{exactly one}}\right) = \dfrac{32}{100} = 0.32.
     \end{equation*}
-    
+
     \item From part (a) we know  that 50 students take at least 1 class.
     We denote new events:
     \begin{itemize}
@@ -195,9 +201,9 @@ We denote the events:
     \end{itemize}
     So we need to find
     \begin{align*}
-        \P(E_{1}\cup E_{2}) &= \P(E_{1}) + \P(E_{1}) -\P(E_{1}\cap E_{2}) = 
+        \P(E_{1}\cup E_{2}) &= \P(E_{1}) + \P(E_{1}) -\P(E_{1}\cap E_{2}) =
         \\
-        & = \dfrac{50}{100} + \dfrac{50}{100} - \dfrac{50}{100}\cdot\dfrac{49}{99} = \dfrac{149}{198} = 0.752525\ldots 
+        & = \dfrac{50}{100} + \dfrac{50}{100} - \dfrac{50}{100}\cdot\dfrac{49}{99} = \dfrac{149}{198} = 0.752525\ldots
     \end{align*}
 \end{enumerate}
 \end{solution}
@@ -226,7 +232,7 @@ After simplification we have
 \end{solution}
 
 \begin{problem}{49}\normalfont
-A group of $6$ men and $6$ women is randomly divided into $2$ groups of size $6$ each. 
+A group of $6$ men and $6$ women is randomly divided into $2$ groups of size $6$ each.
 What is the probability that both groups will have the same number of men?
 \end{problem}
 \begin{solution}
@@ -242,8 +248,8 @@ Hence,
 \section{Conditional Probability and Independence}
 
 \begin{problem}{3.19}\normalfont
-A total of $48$ percent of the women and $37$ percent of the men that took a certain “quit smoking” class remained nonsmokers for at least one year after completing the class. 
-These people then attended a success party at the end of a year. 
+A total of $48$ percent of the women and $37$ percent of the men that took a certain “quit smoking” class remained nonsmokers for at least one year after completing the class.
+These people then attended a success party at the end of a year.
 If 62 percent of the original class was male,
 \begin{enumerate}[label=(\alph*)]
     \item what percentage of those attending the party were women?
@@ -272,20 +278,20 @@ Probabilities of being in the class:
     \end{equation*}
     By Bayes rule we have
     \begin{align*}
-        \P(F\mid S) &= \dfrac{\P(S\mid F)\P(F)}{\P(S)} = 
+        \P(F\mid S) &= \dfrac{\P(S\mid F)\P(F)}{\P(S)} =
         \\
         & = \dfrac{\P(S\mid F)\P(F)}{\P(S\mid F)\P(F) + \P(S\mid M)\P(M)} =
         \\
         & = \dfrac{0.48\cdot 0.38}{0.48\cdot 0.38 + 0.37 + 0.62} = 0.4429\ldots
     \end{align*}
-    
-    \item We need to find 
+
+    \item We need to find
     \begin{equation*}
         \P\left(\text{\enquote{original class attended the party}}\right) = \P(S).
     \end{equation*}
     Having considered the results from part (a), we have
     \begin{align*}
-        \P(S) &= \P(S\mid F)\P(F) + \P(S\mid M)\P(M) = 
+        \P(S) &= \P(S\mid F)\P(F) + \P(S\mid M)\P(M) =
         \\
         & = 0.48\cdot 0.38 + 0.37\cdot 0.62 = 0.4118
     \end{align*}
@@ -310,7 +316,7 @@ A total of 500 married working couples were polled about their annual salaries, 
   \caption{Annual salaries}
   \label{T:peak}
 \end{table}
-For instance, in $36$ of the couples, the wife earned more and the husband earned less than \$$25,000$. 
+For instance, in $36$ of the couples, the wife earned more and the husband earned less than \$$25,000$.
 If one of the couples is randomly chosen, what is
 \begin{enumerate}[label=(\alph*)]
     \item the probability that the husband earns less than \$$25,000$?
@@ -345,7 +351,7 @@ Hence,
     \begin{equation*}
         \P\left(\text{\enquote{husbands earn less}}\right) = \dfrac{HL}{H} = \dfrac{248}{500} = 0.496.
     \end{equation*}
-    
+
     \item Number of wives earning more than \$25000 given that their husbands earn more han \$25000 is
     \begin{equation*}
         HM\cap WM = 54.
@@ -354,24 +360,24 @@ Hence,
     \begin{equation*}
         \P\left(\text{\enquote{wives and husbands earn more}}\right) = \dfrac{HM\cap WM}{HM} = \dfrac{54}{252} = 0.2143.
     \end{equation*}
-    
+
     \item Number of wives earning more than \$25000 given that their husbands earn less than \$25000 is
     \begin{equation*}
         HL\cap WM = 36.
     \end{equation*}
     So we need to find
     \begin{equation*}
-        \P\left(\text{\enquote{wives earn more, husbands earn less}}\right) = 
+        \P\left(\text{\enquote{wives earn more, husbands earn less}}\right) =
         \dfrac{HL\cap WM}{HL} = \dfrac{36}{248} = 0.1452.
     \end{equation*}
 \end{enumerate}
 \end{solution}
 
 \begin{problem}{3.26}\normalfont
-Suppose that $5$ percent of men and $0.25$ percent of women are color blind. 
-A color-blind person is chosen at random. 
-What is the probability of this person being male? 
-Assume that there are an equal number of males and females. 
+Suppose that $5$ percent of men and $0.25$ percent of women are color blind.
+A color-blind person is chosen at random.
+What is the probability of this person being male?
+Assume that there are an equal number of males and females.
 What if the population consisted of twice as many males as females?
 \end{problem}
 \begin{solution}
@@ -400,7 +406,7 @@ Given probabilities are
         \\
         & = \dfrac{0.05\cdot 0.5}{0.05\cdot 0.5 + 0.0025\cdot 0.5} = \dfrac{20}{21} = 0.9524\ldots
     \end{align*}
-    
+
     \item We assume that
     \begin{equation*}
         \P(M) = 2\cdot\P(W).
@@ -417,7 +423,7 @@ Given probabilities are
 \end{solution}
 
 \begin{problem}{3.57ab}\normalfont
-A simplified model for the movement of the price of a stock supposes that on each day the stock's price either moves up $1$ unit with probability $p$ or moves down $1$ unit with probability $1 - p$. 
+A simplified model for the movement of the price of a stock supposes that on each day the stock's price either moves up $1$ unit with probability $p$ or moves down $1$ unit with probability $1 - p$.
 The changes on different days are assumed to be independent.
 \begin{enumerate}[label=(\alph*)]
     \item What is the probability that after $2$ days the stock will be at its original price?
@@ -436,22 +442,22 @@ Given probabilities are
     \P(U_{i}) = p,\quad \P(D_{i}) = 1 - p.
 \end{equation*}
 \begin{enumerate}[label=(\alph*)]
-    \item We need to find 
+    \item We need to find
     \begin{equation*}
         \P(U_{1}D_{2}\cup D_{1}U_{2}).
     \end{equation*}
     Since the events are mutually exclusive, we have
     \begin{align*}
-        \P(U_{1}D_{2}\cup D_{1}U_{2}) &= \P(U_{1}D_{2}) +\P(D_{1}U_{2}) = 
+        \P(U_{1}D_{2}\cup D_{1}U_{2}) &= \P(U_{1}D_{2}) +\P(D_{1}U_{2}) =
         \\
-        & = \P(U_{1})\P(D_{2}) +\P(D_{1})\P(U_{2}) = 
+        & = \P(U_{1})\P(D_{2}) +\P(D_{1})\P(U_{2}) =
         \\
         &= p(1 - p) + (1 - p)p
         \\
         &= 2p(1 - p),
     \end{align*}
     where $U_{1}$ and $U_{2}$ are independent.
-    
+
     \item We need to find
     \begin{equation*}
         \P(U_{1}D_{2}U_{3}\cup D_{1}U_{2}U_{3}\cup U_{1}U_{2}D_{3}).
@@ -460,9 +466,9 @@ Given probabilities are
     \begin{align*}
         \P(U_{1}D_{2}U_{3}\cup D_{1}U_{2}U_{3}\cup U_{1}U_{2}D_{3}) &=  \P(U_{1}D_{2}U_{3}) +\P(D_{1}U_{2}U_{3}) +\P(U_{1}U_{2}D_{3}) =
         \\
-        &= \P(U_{1})\P(D_{2})\P(U_{3}) + 
+        &= \P(U_{1})\P(D_{2})\P(U_{3}) +
         \\
-        &+ \P(D_{1})\P(U_{2})\P(U_{3}) + 
+        &+ \P(D_{1})\P(U_{2})\P(U_{3}) +
         \\
         &+ \P(U_{1})\P(U_{2})\P(D_{3}) =
         \\
@@ -474,10 +480,10 @@ Given probabilities are
 \end{solution}
 
 \begin{problem}{3.60a}\normalfont
-The color of a person’s eyes is determined by a single pair of genes. 
-If they are both blue-eyed genes, then the person will have blue eyes; if they are both brown-eyed genes, then the person will have brown eyes; and if one of them is a blue-eyed gene and the other a brown-eyed gene, then the person will have brown eyes. 
-(Because of the latter fact, we say that the brown-eyed gene is \textit{dominant} over the blue-eyed one.) 
-A newborn child independently receives one eye gene from each of its parents, and the gene it receives from a parent is equally likely to be either of the two eye genes of that parent. 
+The color of a person’s eyes is determined by a single pair of genes.
+If they are both blue-eyed genes, then the person will have blue eyes; if they are both brown-eyed genes, then the person will have brown eyes; and if one of them is a blue-eyed gene and the other a brown-eyed gene, then the person will have brown eyes.
+(Because of the latter fact, we say that the brown-eyed gene is \textit{dominant} over the blue-eyed one.)
+A newborn child independently receives one eye gene from each of its parents, and the gene it receives from a parent is equally likely to be either of the two eye genes of that parent.
 Suppose that Smith and both of his parents have brown eyes, but Smith’s sister has blue eyes.
 \begin{enumerate}[label=(\alph*)]
     \item What is the probability that Smith possesses a blue-eyed gene?
