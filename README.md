@@ -1,7 +1,7 @@
-# Probability Theory
+# Probability Theory Homework Assignments
 
-## Fall 2019
+## Fall 2019, HSE MASNA
 
-* HW 1 is on check
-* HW 2 is on check
-* HW 3 is on check
+* Homework 1: Axioms of Probability, Conditional Probability and Independence;
+* Homework 2: Random Variables, Continuous Random Variables;
+* Homework 3: Jointly Distributed Random Variables, Property of Expectation.
