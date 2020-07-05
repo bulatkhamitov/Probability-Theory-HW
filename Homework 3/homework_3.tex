@@ -24,7 +24,7 @@
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Bin}{Bin}
 \DeclareMathOperator{\Exp}{Exp}
-\DeclareMathOperator{\Geo}{Geo}
+\DeclareMathOperator{\Geo}{Geom}
 % --------------------------------
 \DeclareMathOperator{\dif}{d}
 \DeclareMathOperator{\Cov}{Cov}
@@ -183,9 +183,9 @@ We will use normal approximation due to the complexity of doing approximations w
 \end{gather*}
 where
 \begin{gather*}
-    \mu_{M} = \E[M] = np_{M} = 200\cdot 0.252 = 50.4,\quad\sigma_{M}^{2} = \Var[M] = np_{M}(1 - p_{M}) = 200\cdot 0.252(1 - 0.252) = 37.7,
+    \mu_{M} = \E[M] = np_{M} = 200\cdot 0.252 = 50.4,\,\sigma_{M}^{2} = \Var[M] = np_{M}(1 - p_{M}) = 200\cdot 0.252(1 - 0.252) = 37.7,
     \\
-    \mu_{W} = \E[W] = np_{W} = 200\cdot 0.236 = 47.2,\quad\sigma_{W}^{2} = \Var[W] = np_{W}(1 - p_{W}) = 200\cdot 0.236(1 - 0.236) = 36.1.
+    \mu_{W} = \E[W] = np_{W} = 200\cdot 0.236 = 47.2,\,\sigma_{W}^{2} = \Var[W] = np_{W}(1 - p_{W}) = 200\cdot 0.236(1 - 0.236) = 36.1.
 \end{gather*}
 We want to find $\P(M + W \geqslant 110)$.
 We approximate $M + W$ by a normal random variable distribution with $\mu = 50.4 + 47.2 = 97.6$ and $\sigma^{2} = 37.7 + 36.1 = 73.8$ using the property of the sum of 2 independent variables:
@@ -274,6 +274,7 @@ The joint probability mass function of $X$ and $Y$ is given by
 \section{Properties of Expectation}
 
 \begin{problem}{7.22}
+How many times would you expect to roll a fair die before all $6$ sides appeared at least once?
 \end{problem}
 \begin{solution}
 We define random variable $X_i$, $i=\overline{1,6}$ as the number of additional throws that are needed to jump from $i-1$ collected distinct numbers to $i$ distinct numbers.
@@ -289,10 +290,14 @@ Hence,
 \end{solution}
 
 \begin{problem}{7.30}
+If $X$ and $Y$ are independent and identically distributed with mean $\mu$ and variance $\sigma^{2}$, find
+\begin{equation*}
+    \E\left[(X - Y)^{2}\right].
+\end{equation*}
 \end{problem}
 \begin{solution}
 \begin{gather*}
-    \E\left[(X - Y)^{2}\right]] = \E[X^{2} - 2XY + Y^{2}] = \E[X^{2}] - 2\E[X]\E[Y] + \E[Y^{2}] =
+    \E\left[(X - Y)^{2}\right] = \E[X^{2} - 2XY + Y^{2}] = \E[X^{2}] - 2\E[X]\E[Y] + \E[Y^{2}] =
     \\
     \begin{bmatrix}
         \E[X^{2}] = \Var X + \E[X]^{2} 
@@ -313,6 +318,8 @@ Hence,
 \end{solution}
 
 \begin{problem}{7.39}
+Let $X_{1}\dots$ be independent with common mean $\mu$ and common variance $\sigma^{2}$, and set $Y_{n} = X_{n} + X_{n+1} + X_{n+2}$.
+For $j\geqslant 0$, find $\Cov(Y_{n}, Y_{n+j})$.
 \end{problem}
 \begin{solution}
 \text{}
@@ -337,7 +344,13 @@ Hence,
 \end{solution}
 
 \begin{problem}{7.49}
+There are two misshapen coins in a box; their probabilities for landing on heads when they are flipped are, respectively, $.4$ and $.7$.
+One of the coins is to be randomly chosen and flipped $10$ times.
+Given that two of the first three flips landed on heads, what is the conditional expected number of heads in the $10$ flips?
 \end{problem}
+
+\newpage
+
 \begin{solution}
 We denote the following:
 \begin{itemize}
@@ -386,6 +399,13 @@ Hence,
 \end{solution}
 
 \begin{problem}{7.61(a-c)}
+Let $X_{1}\dots$ be independent random variables with the common distribution function $F$, and suppose they are independent of $N$, a geometric random variable with parameter $p$.
+Let $M =\max(X_{1}, \dots, X_{N})$.
+\begin{enumerate}[label=(\alph*)]
+    \item Find $\P(M\leqslant x)$ by conditioning on $N$;
+    \item Find $\P(M\leqslant x\mid N = 1)$;
+    \item Find $\P(M\leqslant x\mid N > 1)$.
+\end{enumerate}
 \end{problem}
 \begin{solution}
 \text{}
