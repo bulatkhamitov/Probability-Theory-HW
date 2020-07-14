@@ -290,31 +290,18 @@ Hence,
 \end{solution}
 
 \begin{problem}{7.30}
-If $X$ and $Y$ are independent and identically distributed with mean $\mu$ and variance $\sigma^{2}$, find
-\begin{equation*}
-    \E\left[(X - Y)^{2}\right].
-\end{equation*}
+If $X$ and $Y$ are independent and identically distributed with mean $\mu$ and variance $\sigma^{2}$, find $\E\left[(X - Y)^{2}\right]$.
 \end{problem}
 \begin{solution}
-\begin{gather*}
-    \E\left[(X - Y)^{2}\right] = \E[X^{2} - 2XY + Y^{2}] = \E[X^{2}] - 2\E[X]\E[Y] + \E[Y^{2}] =
+\begin{align*}
+    \E\left[(X - Y)^{2}\right] &= \E[X^{2} - 2XY + Y^{2}] = \E[X^{2}] - 2\E[X]\E[Y] + \E[Y^{2}]
     \\
-    \begin{bmatrix}
-        \E[X^{2}] = \Var X + \E[X]^{2} 
-        \\
-        \E[Y^{2}] = \Var Y + \E[Y]^{2}
-        \\
-        \E[X] = \E[Y] = \mu
-        \\
-        \Var X = \Var Y = \sigma^{2}
-    \end{bmatrix}
+    &= \Var X + \E[X]^{2} - 2\E[X]\E[Y] + \Var Y + \E[Y]^{2}
     \\
-    = \Var X + \E[X]^{2} - 2\E[X]\E[Y] + \Var Y + \E[Y]^{2} =
+    &= \sigma^{2} + \mu^{2} - 2\mu^{2} + \sigma^{2} + \mu^{2}
     \\
-    = \sigma^{2} + \mu^{2} - 2\mu^{2} + \sigma^{2} + \mu^{2} =
-    \\
-    = 2\sigma^{2}.
-\end{gather*}
+    &= 2\sigma^{2}.
+\end{align*}
 \end{solution}
 
 \begin{problem}{7.39}
@@ -411,16 +398,12 @@ Let $M =\max(X_{1}, \dots, X_{N})$.
 \text{}
 \begin{enumerate}[label=(\alph*)]
     \item
-    \begin{align*}
-        \P(M \leqslant x) &= \sum_{n=1}^{\infty}\P(M \leqslant x\mid N = n)\P(N = n)
-        \\
-        &= \sum_{n=1}^{\infty}F^{n}(x)p(1 - p)^{n-1}
-        \\
-        &= \frac{pF(x)}{1 - (1 - p)F(x)}.
-    \end{align*}
+    \begin{equation*}
+        \P(M \leqslant x) = \sum_{n=1}^{\infty}\P(M \leqslant x\mid N = n)\P(N = n) = \sum_{n=1}^{\infty}F^{n}(x)p(1 - p)^{n-1} = \frac{pF(x)}{1 - (1 - p)F(x)}.
+    \end{equation*}
     \item
     \begin{equation*}
-        \P(X \leqslant x\mid N = 1) = F(x).
+        \P(M \leqslant x\mid N = 1) = F(x).
     \end{equation*}
     \item
     \begin{equation*}
